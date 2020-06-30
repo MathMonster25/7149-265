@@ -11,6 +11,7 @@ import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
 import com.intel.realsense.librealsense.DeviceListener;
 import com.intel.realsense.librealsense.ProductLine;
 import com.intel.realsense.librealsense.RsContext;
+import com.intel.realsense.librealsense.Frame;
 
 import java.util.function.Consumer;
 
@@ -80,6 +81,7 @@ public class T265Camera {
     private Pose2d mOrigin = new Pose2d();
     private CameraUpdate mLastReceivedUpdate = null;
     private Consumer<CameraUpdate> mPoseConsumer = null;
+    private Frame mFrame = null;
 
     /**
      * This method constructs a T265 camera and sets it up with the right info.
@@ -271,8 +273,10 @@ public class T265Camera {
 
     private static native void cleanup();
 
-    private synchronized void consumePoseUpdate(float x, float y, float radians, float dx, float dy,
+    private synchronized void consumePoseUpdate(Frame frame, float x, float y, float radians, float dx, float dy,
                                                 float dtheta, int confOrdinal) {
+        mFrame = frame;
+        
         // First we apply an offset to go from the camera coordinate system to the
         // robot coordinate system with an origin at the center of the robot. This
         // is not a directional transformation.
