@@ -194,7 +194,7 @@ Java_com_spartronics4915_lib_T265Camera_newCamera(JNIEnv *env, jobject thisObj, 
 
                 auto velocityMagnitude = hypotf(-poseData.velocity.z, -poseData.velocity.x);
                 env->CallVoidMethod(
-                        devAndSensors->globalThis, callbackMethodID,
+                        devAndSensors->globalThis, callbackMethodID, frame
                         -poseData.translation.z, -poseData.translation.x, yaw,
                         -poseData.velocity.z, -poseData.velocity.x, poseData.angular_velocity.y,
                         poseData.tracker_confidence
